@@ -3,6 +3,8 @@ package Queues;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Events.Event;
+import Events.EventManager;
 import Teams.Team;
 
 public class QueueItemList {
@@ -110,7 +112,10 @@ public class QueueItemList {
 	}
 
 	public void ReturnTeams(Team winner, Team lost) {
-
+		//Keeps track of who wins and who loses a competition
+		//Return the winner of every event
+		
+		
 	}
 
 	/**
@@ -121,94 +126,27 @@ public class QueueItemList {
 	 * @param t
 	 */
 
-	public void createQueue(Team[] t) {
-		QueueItemList q = new QueueItemList();
-		int index;
-		Random random = new Random();
-		int[] randomNumberArray = new int[t.length];
-		index = random.nextInt(t.length + 1);
-
-		for (int i = 0; i < t.length; i++) {
-			q.enqueue(t[index]);
-			int index2 = random.nextInt(t.length + 1);
-			if (index2 != index) {
-				q.enqueue(t[index2]);
-				index = index2;
-			} else {
-
-			}
-
-		}
-	}
-
-	public void createRandomQueue(Team[] t) {
-		QueueItemList q = new QueueItemList();
-		int index;
-		int array[] = new int[t.length];
-		Random random = new Random();
-
-		for (int i = 0; i < t.length; i++) {
-			index = random.nextInt(t.length + 1);
-			if (array[i - 1] != index) {
-				q.enqueue(t[index]);
-				array[i] = index;
-			}
-		}
-
-	}
-
-	public void randoQueue(Team[] t) {
-		QueueItemList q = new QueueItemList();
-		int index;
-		Random random = new Random();
-		for (int i = 0; i < t.length; i++) {
-			index = random.nextInt(t.length + 1);
-			if (q.isEmpty() == false
-					&& q.getCurrItem().getTeamValue() != t[index]) {
-				q.enqueue(t[index]);
-			}
-		}
-	}
-
-	public void rQueue(Team[] t) {
-		QueueItemList q = new QueueItemList();
-		int index;
-		Random random = new Random();
-		int array[] = new int[t.length];
-		for (int i = 0; i < array.length; i++){
-			index = random.nextInt(t.length + 1);
-			array[i] = index;
-		}
-	}
-
-	public void randomQueue(Team[] t){
+	public void randomQueue(Team[] t) {
+		/*
+		 * creates a blank queue
+		 * creates an array list of 8 random integers
+		 * int a is a random integer between 1-8 (maybe need to add +1)
+		 * if the array list does not contain the random number 'a'
+		 * add 'a' to the array list 
+		 
+		 */
 		QueueItemList q = new QueueItemList();
 		ArrayList<Integer> randNums = new ArrayList();
 		Random random = new Random();
-		while(randNums.size() != 8) {
-		    int a = random.nextInt(8);
-		    if(false == randNums.contains(a))
-		        randNums.add(a);
+		while (randNums.size() != 8) {
+			int a = random.nextInt(8);
+			if (false == randNums.contains(a))
+				randNums.add(a);
 		}
-		for(int i = 0; i < randNums.size(); i++){
+		for (int i = 0; i < randNums.size(); i++) {
 			q.enqueue(t[randNums.get(i)]);
 		}
 	}
-	// boolean check = true;
-	/*
-	 * do{ q.enqueue(t[index]); intArray[0] = index; }while(check == true); int
-	 * index2 = random.nextInt(t.length + 1); if(t[index2] != t[index]){
-	 * q.enqueue(t[index2]); index = index2; }
-	 */
-
-	// }
-
-	/*
-	 * public void createQueue(Team[] t) { QueueItemList q = new
-	 * QueueItemList(); for (int i = 0; i < t.length; i++) { q.enqueue(t[i]); }
-	 * 
-	 * }
-	 */
 
 	public QueueItem getFirst() {
 		return first;

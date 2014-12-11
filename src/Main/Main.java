@@ -86,9 +86,6 @@ public class Main {
                     listCompetitions();
                 else if("sc".equals(line) || "startcompetition".equals(line))
                 	cm = new CompetitionManager(em, em.getEvents());
-                	
-                else if("ec".equals(line) || "endcompetition".equals(line))
-                    endCompetition();
                 else if("h".equals(line) || "help".equals(line))
                     help();
                 else if("queue".equals(line))
@@ -177,7 +174,7 @@ public class Main {
     
     private void initializeQueue(){
     	QueueItemList q = new QueueItemList();
-        q.createQueue(tm.getTeams());
+        q.randomQueue(tm.getTeams());
         
         //Not sure if dequeueing is needed.
         //Trying to test if teams were infact added to the queue
@@ -359,9 +356,9 @@ public class Main {
         System.out.println("o   olympians         List the olympians in the system");
         System.out.println("e   events            List the events in the system");
         System.out.println("t   teams             List the teams in the system");
-        System.out.println("c   competitions      List the current competitions in the system");
+        //System.out.println("c   competitions      List the current competitions in the system");
         System.out.println("sc  startcompetition  Start a new competition");
-        System.out.println("ec  endcompetition    End a currently running competition");
+        //System.out.println("ec  endcompetition    End a currently running competition");
         System.out.println("h   help              Show this help screen");
         System.out.println("q   quit              Quit the program");
     }

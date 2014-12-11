@@ -115,17 +115,5 @@ public abstract class Event {
 		this.playDistance = playDistance;
 	}
 
-	/*public void createQueue(Team[] t) {
-		QueueItemList q = new QueueItemList();
-		for (int i = 0; i < t.length; i++) {
-			q.enqueue(t);
-
-		}
-	}*/
-
-
-
-	public void enqueueWinner(Team t) {
-
-	}
+	
 }

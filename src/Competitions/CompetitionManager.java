@@ -33,50 +33,43 @@ public class CompetitionManager {
 	 */
 	public CompetitionManager(EventManager em, Event[] gameEvents)
     {
+		/*
+		 * 
+		 */
         this.em = em;
-        //this.tm = em.getT();
+        
         QueueItemList CompetitionList = new QueueItemList();
-		CompetitionList.createQueue(em.getT());
+		CompetitionList.randomQueue(em.getT());
 		
 		StackItemList StackList = new StackItemList();
 		
 		input = new BufferedReader(new InputStreamReader(System.in));
         String line;
 		
-        
-		Team loser = whatever team user decides;
-		Team winner = whatever team user decides;
-		
-		
-		/*
+        /*
 		 * while there is still events to play
 		 */
 		while(gameEvents.length != 0){
-		int[] completedEvents = new int[em.getEvents().length];
-		Boolean check = false;
-		int completeEventsNum = 0;
+			int[] completedEvents = new int[em.getEvents().length];
+			Boolean check = false;
+			int completeEventsNum = 0;
 		
-		while (check == false){
-			System.out.println("What number event would you like to play?");
-			int gameEvent = Integer.parseInt(input.readLine());
-			if(!Arrays.asList(completedEvents).contains(gameEvent)){
+			while (check == false){
+				System.out.println("What number event would you like to play?");
+				int currGameEvent = Integer.parseInt(input.readLine());
+				if(!Arrays.asList(completedEvents).contains(currGameEvent)){
 				check = true;
-				completedEvents[completeEventsNum] = gameEvent;
+				completedEvents[completeEventsNum] = currGameEvent;
 				completeEventsNum++;
-			}
+			    }
 		
-		
-		
-		
-		if(gameEvent > em.getEvents().length){
-			System.out.println("please enter a number between 1-8");
-		}else{
-			System.out.println("Currently Creating a competition of " + em.getSingleEvent(gameEvent));
-			Event currEvent = em.getSingleEvent(gameEvent);
-			/*Team[] playingTeams = CompetitionList.getNextTeams();
-			Team t1 = playingTeams[0];
-			Team t2 = playingTeams[1];*/
-		}
+				if(currGameEvent > em.getEvents().length){
+					System.out.println("please enter a number between 1-8");
+					}else{
+							System.out.println("Currently Creating a competition of " + em.getSingleEvent(currGameEvent));
+							Event currEvent = em.getSingleEvent(currGameEvent);
+			
+					}
 		
 		
 		
@@ -85,41 +78,42 @@ public class CompetitionManager {
 				Team[] playingTeams = CompetitionList.getNextTeams();
 				Team t1 = playingTeams[0];
 				Team t2 = playingTeams[1];
-				Team[] results = compete(em.getSingleEvent(gameEvent), t1, t2);
+				Team[] results = compete(em.getSingleEvent(currGameEvent), t1, t2);
 				CompetitionList.enqueue(results[0]);
 				StackList.push(results[1]);
 		}
+		
 		while(CompetitionList.peekNextTeams() == null){
 		StackList.push(CompetitionList.getFirst().getTeamValue());
 		
 		int count = 1;
-		System.out.println("Competition has ended. Here are the results");
-		while (!StackList.isEmpty()){
-			System.out.println(count + ": " + StackList.pop().toString());
-			count++;
-		}
-	
-		
-				
-				
+		System.out.println("Competition has ended. Here are the results. The first listed is the winner ");
+			while (!StackList.isEmpty()){
+				System.out.println(count + ": " + StackList.pop().toString());
+				count++;
+			}
+		}		
 	}
-			
-		
-			
-			
+}
+}
 
-	// startCompetition(em.getSingleEvent(gameEvent), CompetitionList.dequeue(),
-	// CompetitionList.dequeue());
+	
 
 	private Team[] compete(Event currEvent, Team t1, Team t2) {
 		Team[] results = fight(t1, t2);
 		return results;
 	}
 
-	/*
-	 * Pass in Vars WHILE (FIRST.NEXT != NULL) { Dequeue 2 Team to Fight Fight
-	 * Loser Leaves, Winner Stays (ENQUEUED BACK IN) }
-	 */
+	
+	//Returns the winner for each event
+	public void returnWinners(StackItemList SIL, EventManager e){
+		for(int i = 0; i < e.getEvents().length; i++){
+			System.out.println("The winner of " + e.getSingleEvent(i) +
+					" is" + HOW TO GET THE STACK FOR EACH EVENT);
+			
+		}
+	}
+	
 
 	/**
 	 * Start a new competition, this competition will exist until endCompetition
@@ -133,16 +127,7 @@ public class CompetitionManager {
 	 *            the away team playing this competition
 	 */
 
-	/*
-	 * private void startCompetition(Event event, Team homeTeam, Team awayTeam)
-	 * { // create the new competition object Competition newItem = new
-	 * Competition(event, homeTeam, awayTeam);
-	 * 
-	 * // if no competitions currently going on if (tail == null) head = tail =
-	 * newItem; // otherwise, add to the end else { newItem.setPrev(tail);
-	 * tail.setNext(newItem); tail = newItem; } numCompetitions++; }
-	 */
-
+	
 	/**
 	 * Retrieve the currently started competitions
 	 *
