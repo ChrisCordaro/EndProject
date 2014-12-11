@@ -88,8 +88,7 @@ public class Main {
                 	cm = new CompetitionManager(em, em.getEvents());
                 else if("h".equals(line) || "help".equals(line))
                     help();
-                else if("queue".equals(line))
-                	initializeQueue();
+               
                 else if("q".equals(line) || "quit".equals(line))
                     break;
                 else
@@ -172,25 +171,16 @@ public class Main {
      * Place every team on the queue 
      */
     
-    private void initializeQueue(){
-    	QueueItemList q = new QueueItemList();
-        q.randomQueue(tm.getTeams());
-        
-        //Not sure if dequeueing is needed.
-        //Trying to test if teams were infact added to the queue
-        while(q.isEmpty() == false){
-        q.dequeue();
-        }
-      
-    }
+  
     
-    public void listTeamsPlacing(){
+    public void listTeamsPlacing(CompetitionManager CM){
     	//for each event played in competition manager
     	//list each placing
     	
     	Event [] events = em.getEvents();
+    	StackItemList SIL = CM.
     	for(int i = 0; i > events.length; i++){
-    		
+    		CM.returnWinners(SIL, events[i]);
     		
     	}
     }

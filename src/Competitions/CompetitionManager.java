@@ -84,10 +84,24 @@ public class CompetitionManager {
 		}
 		
 		while(CompetitionList.peekNextTeams() == null){
+		/*
+		 * when peekNextTeams returns only 1 team
+		 * push that team onto the stack and thus makes it the winner of the competition
+		 * print out to the user the placings of the teams
+		 * for every competition started by the user:
+		 * 	1)User is prompted to enter what event he/she like to play
+		 * 	2)Add that event to completedEvents array
+		 * 	3)Dequeue two teams from randomly generated queue
+		 * 	4)Have the results of getNextTeams() compete() which runs the fight() method
+		 * 	5)Fight randomly decides a winner
+		 * 	6)Enqueues winner back to queue and pushes loser to stack
+		 * 	7)When peek next teams is null, the competition is over
+		 * 	8)Print out placings
+		 */
 		StackList.push(CompetitionList.getFirst().getTeamValue());
 		
 		int count = 1;
-		System.out.println("Competition has ended. Here are the results. The first listed is the winner ");
+		System.out.println("Competition has ended. Here are the results. The first listed is the winner for  " + em.getSingleEvent(currGameEvent));
 			while (!StackList.isEmpty()){
 				System.out.println(count + ": " + StackList.pop().toString());
 				count++;
@@ -103,6 +117,23 @@ public class CompetitionManager {
 		Team[] results = fight(t1, t2);
 		return results;
 	}
+	
+	public Team[] fight(Team t1, Team t2) {
+		Team[] returnTeam = new Team[2];
+		Random rn = new Random();
+		int decidingInt = rn.nextInt(10) + 1;
+		if (decidingInt > 5) {
+			returnTeam[0] = t1;
+			returnTeam[1] = t2;
+			return returnTeam;
+		} else {
+			returnTeam[0] = t2;
+			returnTeam[1] = t1;
+			return returnTeam;
+		}
+
+	}
+
 
 	
 	//Returns the winner for each event
@@ -254,21 +285,6 @@ public class CompetitionManager {
 		return true;
 	}
 
-	public Team[] fight(Team t1, Team t2) {
-		Team[] returnTeam = new Team[2];
-		Random rn = new Random();
-		int decidingInt = rn.nextInt(10) + 1;
-		if (decidingInt > 5) {
-			returnTeam[0] = t1;
-			returnTeam[1] = t2;
-			return returnTeam;
-		} else {
-			returnTeam[0] = t2;
-			returnTeam[1] = t1;
-			return returnTeam;
-		}
-
-	}
 
 	/**
 	 * Determine if a team is currently free
