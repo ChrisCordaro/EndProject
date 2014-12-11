@@ -52,7 +52,7 @@ public class Main {
         tm = new TeamManager(om);
         em = new EventManager(tm);
        // cm = new CompetitionManager(em, tm);
-        cm = new CompetitionManager(em, em.getEvents());
+        cm = null;
     }
 
     /**
@@ -86,9 +86,15 @@ public class Main {
                     listCompetitions();
                 else if("sc".equals(line) || "startcompetition".equals(line))
                 	cm = new CompetitionManager(em, em.getEvents());
-                else if("h".equals(line) || "help".equals(line))
+                else if ("h".equals(line) || "help".equals(line))
                     help();
-               
+                else if ("sw".equals(line)) {
+                	if(cm != null){
+                		cm.showWinners();
+                	} else {
+                		System.out.println("The Competitions have not been run yet");
+                	} 	
+                }
                 else if("q".equals(line) || "quit".equals(line))
                     break;
                 else
@@ -173,7 +179,7 @@ public class Main {
     
   
     
-    public void listTeamsPlacing(CompetitionManager CM){
+    /*public void listTeamsPlacing(CompetitionManager CM){
     	//for each event played in competition manager
     	//list each placing
     	
@@ -183,7 +189,7 @@ public class Main {
     		CM.returnWinners(SIL, events[i]);
     		
     	}
-    }
+    }*/
 
 
     /**
@@ -347,7 +353,7 @@ public class Main {
         System.out.println("e   events            List the events in the system");
         System.out.println("t   teams             List the teams in the system");
         //System.out.println("c   competitions      List the current competitions in the system");
-        System.out.println("sc  startcompetition  Start a new competition");
+        System.out.println("sc  startcompetition  Start a new competition and play it. Will display the placings of teams");
         //System.out.println("ec  endcompetition    End a currently running competition");
         System.out.println("h   help              Show this help screen");
         System.out.println("q   quit              Quit the program");

@@ -1,6 +1,7 @@
 package Competitions;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Random;
@@ -20,7 +21,7 @@ public class CompetitionManager {
 	private Competition tail;
 	private int numCompetitions;
 	private BufferedReader input;
-
+	private Team winnerArray[];
 	/**
 	 * Construct a new CompetitionManager
 	 *
@@ -31,59 +32,59 @@ public class CompetitionManager {
 	 *            the team manager that manages the teams that can participate
 	 *            in a competition
 	 */
-	public CompetitionManager(EventManager em, Event[] gameEvents)
-    {
+public CompetitionManager(EventManager em, Event[] gameEvents)
+	{
 		/*
-		 * 
-		 */
-        this.em = em;
-        
-        QueueItemList CompetitionList = new QueueItemList();
-		CompetitionList.randomQueue(em.getT());
-		
-		StackItemList StackList = new StackItemList();
-		
-		input = new BufferedReader(new InputStreamReader(System.in));
-        String line;
-		
-        /*
-		 * while there is still events to play
-		 */
-		while(gameEvents.length != 0){
-			int[] completedEvents = new int[em.getEvents().length];
-			Boolean check = false;
-			int completeEventsNum = 0;
-		
-			while (check == false){
-				System.out.println("What number event would you like to play?");
-				int currGameEvent = Integer.parseInt(input.readLine());
-				if(!Arrays.asList(completedEvents).contains(currGameEvent)){
+	 * 
+	 */
+	this.em = em;
+	
+	QueueItemList CompetitionList = new QueueItemList();
+	CompetitionList.randomQueue(em.getT());
+	
+	StackItemList StackList = new StackItemList();
+	
+	input = new BufferedReader(new InputStreamReader(System.in));
+	String line;
+	
+	int numEvents = gameEvents.length;
+	int eventsPlayed = 0;
+	/*
+	 * while there is still events to play
+	 */
+	while(eventsPlayed < numEvents){
+		int[] completedEvents = new int[em.getEvents().length];
+		Boolean check = false;
+		int completeEventsNum = 0;
+		int currGameEvent = 0;
+		while (check == false){
+			System.out.println("What number event would you like to play?");
+			currGameEvent = Integer.parseInt(input.readLine());
+			if(!Arrays.asList(completedEvents).contains(currGameEvent)){
 				check = true;
 				completedEvents[completeEventsNum] = currGameEvent;
 				completeEventsNum++;
-			    }
-		
-				if(currGameEvent > em.getEvents().length){
-					System.out.println("please enter a number between 1-8");
-					}else{
-							System.out.println("Currently Creating a competition of " + em.getSingleEvent(currGameEvent));
-							Event currEvent = em.getSingleEvent(currGameEvent);
+			}else{
+				System.out.println("You already played that event, enter a new number");
+			}
 			
-					}
-		
-		
-		
-	
+			if(currGameEvent > numEvents){
+				System.out.println("please enter a number between 1-8");
+			} else {
+				System.out.println("Currently Creating a competition of " + em.getSingleEvent(currGameEvent));
+				Event currEvent = em.getSingleEvent(currGameEvent);	
+			}
+		}
+				
 		while (CompetitionList.peekNextTeams() != null){
-				Team[] playingTeams = CompetitionList.getNextTeams();
-				Team t1 = playingTeams[0];
-				Team t2 = playingTeams[1];
-				Team[] results = compete(em.getSingleEvent(currGameEvent), t1, t2);
-				CompetitionList.enqueue(results[0]);
-				StackList.push(results[1]);
+			Team[] playingTeams = CompetitionList.getNextTeams();
+			Team t1 = playingTeams[0];
+			Team t2 = playingTeams[1];
+			Team[] results = compete(em.getSingleEvent(currGameEvent), t1, t2);
+			CompetitionList.enqueue(results[0]);
+			StackList.push(results[1]);
 		}
 		
-		while(CompetitionList.peekNextTeams() == null){
 		/*
 		 * when peekNextTeams returns only 1 team
 		 * push that team onto the stack and thus makes it the winner of the competition
@@ -102,20 +103,29 @@ public class CompetitionManager {
 		
 		int count = 1;
 		System.out.println("Competition has ended. Here are the results. The first listed is the winner for  " + em.getSingleEvent(currGameEvent));
-			while (!StackList.isEmpty()){
-				System.out.println(count + ": " + StackList.pop().toString());
-				count++;
-			}
-		}		
+		
+		//Record winners of each events
+		winnerArray[currGameEvent] = StackList.peekTopTeam();	
+		
+		while (!StackList.isEmpty()){
+			System.out.println(count + ": " + StackList.pop().toString());
+			count++;			
+		}
+		eventsPlayed++;
+		check = false;
 	}
-}
 }
 
 	
 
 	private Team[] compete(Event currEvent, Team t1, Team t2) {
 		Team[] results = fight(t1, t2);
+		returnTeams(results[0],results[1]);
 		return results;
+	}
+	
+	public void trackWinners(StackItemList s, int x){
+		winnerArray[x] = s.peekTopTeam();
 	}
 	
 	public Team[] fight(Team t1, Team t2) {
@@ -134,17 +144,17 @@ public class CompetitionManager {
 
 	}
 
-
-	
-	//Returns the winner for each event
-	public void returnWinners(StackItemList SIL, EventManager e){
-		for(int i = 0; i < e.getEvents().length; i++){
-			System.out.println("The winner of " + e.getSingleEvent(i) +
-					" is" + HOW TO GET THE STACK FOR EACH EVENT);
-			
-		}
+	public void returnTeams(Team winner, Team loser){
+		winner.incrementWins();
+		loser.incrementLosses();
 	}
-	
+
+	public void showWinners(){
+		for (int i = 0; i < winnerArray.length; i++){
+			System.out.println("For the event " + em.getSingleEvent(i) + ", the winner was " + winnerArray[i].toString());
+		} 
+	}
+		
 
 	/**
 	 * Start a new competition, this competition will exist until endCompetition

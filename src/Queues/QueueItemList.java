@@ -140,7 +140,7 @@ public class QueueItemList {
 		Random random = new Random();
 		while (randNums.size() != 8) {
 			int a = random.nextInt(8);
-			if (false == randNums.contains(a))
+			if (!randNums.contains(a))
 				randNums.add(a);
 		}
 		for (int i = 0; i < randNums.size(); i++) {

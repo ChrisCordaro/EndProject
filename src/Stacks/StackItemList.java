@@ -1,4 +1,5 @@
 package Stacks;
+
 import Queues.QueueItem;
 import Teams.Team;
 
@@ -43,12 +44,12 @@ public class StackItemList {
 			currItem = s;
 		} else {
 			StackItem temp = currItem;
-			
+
 			last = s;
 			currItem.setNext(s);
 			currItem = s;
 			currItem.setPrev(temp);
-			
+
 		}
 
 	}
@@ -63,31 +64,25 @@ public class StackItemList {
 
 			return returnTeam;
 		}
-	
+
 	}
-	
-	public boolean isEmpty(){
-		if(last == null){
+
+	public boolean isEmpty() {
+		if (last == null) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-		
+
 	}
 	
-	 /*public Team peek() {
-		 System.out.println("Peeking Stack: ");
-	      return last.getTeamValue();
-	      
-	    }*/
-	
-	
-	/**
-	 * checks to see if there is only one remaining team on queue
-	 * if so, push that team onto the stack
-	 * @param QI
-	 */
-	public void pushLastTeam(QueueItem QI){
-		
+	public Team peekTopTeam(){
+		if(last == null){
+			return null;
+		}else{
+			Team topTeam = last.getTeamValue();
+			return topTeam;
+		}
 	}
+
 }
