@@ -36,6 +36,12 @@ public class StackItemList {
 		this.currItem = currItem;
 	}
 
+	/*
+	 * checks to see if stack is null
+	 * if it is an empty stack, push the item onto it and create it as first/last/curr
+	 * if there is currently an item
+	 * last now becomes the item
+	 */
 	public void push(Team t) {
 		StackItem s = new StackItem(t);
 		if (first == null) {
@@ -53,6 +59,10 @@ public class StackItemList {
 		}
 
 	}
+	
+	/*
+	 * removes the last item of the stack
+	 */
 
 	public Team pop() {
 		if (first == null) {
@@ -75,6 +85,12 @@ public class StackItemList {
 		}
 
 	}
+	
+	/*
+	 * returns the team at the top of the stack
+	 * but it does not dequeue it
+	 * used to print out the list of winners in CompetitionManager
+	 */
 	
 	public Team peekTopTeam(){
 		if(last == null){

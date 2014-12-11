@@ -93,6 +93,12 @@ public class QueueItemList {
 		}
 	}
 
+	
+	/*
+	 * creates two variables that are the next two items
+	 * on the queue
+	 * puts them into an array and returns the two spots
+	 */
 	public Team[] getNextTeams() {
 
 		System.out.println("Setting up team vs team");
@@ -111,12 +117,7 @@ public class QueueItemList {
 		}
 	}
 
-	public void ReturnTeams(Team winner, Team lost) {
-		//Keeps track of who wins and who loses a competition
-		//Return the winner of every event
-		
-		
-	}
+
 
 	/**
 	 * creates a queue based on the teams variable found in the team manager

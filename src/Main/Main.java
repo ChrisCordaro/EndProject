@@ -85,11 +85,19 @@ public class Main {
                 else if("c".equals(line) || "competitions".equals(line))
                     listCompetitions();
                 else if("sc".equals(line) || "startcompetition".equals(line))
+                	/*an instance of cm is created here
+                	 * if you declare a competition as a class variable it will run a competition
+                	 * and if you reference it here it will lead to a null point exception
+                	 * 
+                	 */
                 	cm = new CompetitionManager(em, em.getEvents());
                 else if ("h".equals(line) || "help".equals(line))
                     help();
-                else if ("sw".equals(line)) {
+                else if ("sw".equals(line) || "showwinners".equals(line)) {
                 	if(cm != null){
+                		/*
+                		 * displays winner of each individual event
+                		 */
                 		cm.showWinners();
                 	} else {
                 		System.out.println("The Competitions have not been run yet");
@@ -354,6 +362,7 @@ public class Main {
         System.out.println("t   teams             List the teams in the system");
         //System.out.println("c   competitions      List the current competitions in the system");
         System.out.println("sc  startcompetition  Start a new competition and play it. Will display the placings of teams");
+        System.out.println("sw  showwinners       Displays the winners of each event competition.");
         //System.out.println("ec  endcompetition    End a currently running competition");
         System.out.println("h   help              Show this help screen");
         System.out.println("q   quit              Quit the program");

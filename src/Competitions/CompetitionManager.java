@@ -59,7 +59,15 @@ public CompetitionManager(EventManager em, Event[] gameEvents)
 		int currGameEvent = 0;
 		while (check == false){
 			System.out.println("What number event would you like to play?");
-			currGameEvent = Integer.parseInt(input.readLine());
+			try {
+				currGameEvent = Integer.parseInt(input.readLine());
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(!Arrays.asList(completedEvents).contains(currGameEvent)){
 				check = true;
 				completedEvents[completeEventsNum] = currGameEvent;
@@ -128,6 +136,13 @@ public CompetitionManager(EventManager em, Event[] gameEvents)
 		winnerArray[x] = s.peekTopTeam();
 	}
 	
+	
+	/*
+	 * places two teams against each other
+	 * creates a random number between 1-10
+	 * if its bigger than 5, returnTeam[0] = t1
+	 * if its smaller that 5, returnTeam[1] = t2
+	 */
 	public Team[] fight(Team t1, Team t2) {
 		Team[] returnTeam = new Team[2];
 		Random rn = new Random();
@@ -145,10 +160,17 @@ public CompetitionManager(EventManager em, Event[] gameEvents)
 	}
 
 	public void returnTeams(Team winner, Team loser){
+		/*
+		 * increments/decrements a teams wins or losses
+		 */
 		winner.incrementWins();
 		loser.incrementLosses();
 	}
-
+	
+	
+	/*
+	 * for each event print out the corresponding index of the winnerArray
+	 */
 	public void showWinners(){
 		for (int i = 0; i < winnerArray.length; i++){
 			System.out.println("For the event " + em.getSingleEvent(i) + ", the winner was " + winnerArray[i].toString());
